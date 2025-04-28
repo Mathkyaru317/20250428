@@ -14,14 +14,18 @@ function setup() {
 function draw() {
   background('#dde5b6'); // 確保背景顏色一致
 
-  // 將攝影機影像顯示在畫布中間
+  // 翻轉畫布以左右顛倒影像
+  push();
+  translate(width / 2, height / 2); // 將原點移到畫布中心
+  scale(-1, 1); // 水平翻轉
   image(
     capture,
-    (width - capture.width) / 2,
-    (height - capture.height) / 2,
+    -capture.width / 2,
+    -capture.height / 2,
     capture.width,
     capture.height
   );
+  pop();
 }
 
 function windowResized() {
