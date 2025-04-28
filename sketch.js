@@ -35,13 +35,17 @@ function draw() {
   overlayGraphics.background(0); // 設定背景為黑色
   overlayGraphics.noStroke();
 
-  // 每隔 20 單位繪製圓
+  // 每隔 20 單位繪製方框和圓
   for (let x = 0; x < overlayGraphics.width; x += 20) {
     for (let y = 0; y < overlayGraphics.height; y += 20) {
       // 從 capture 影像中取得相對應位置的顏色
       let col = capture.get(x, y);
-      overlayGraphics.fill(col);
-      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 圓的寬高為 15
+      let g = green(col); // 取得 G 值
+      overlayGraphics.fill(0, g, 100); // 方框顏色：R=0, G=保留, B=100
+      overlayGraphics.rect(x + 1, y + 1, 18, 18); // 繪製方框，寬高為 18
+
+      overlayGraphics.fill(0); // 圓的顏色為黑色
+      overlayGraphics.ellipse(x + 10, y + 10, 5, 5); // 繪製圓，寬高為 5
     }
   }
 
