@@ -13,7 +13,6 @@ function setup() {
 
   // 建立與攝影機影像相同大小的圖層
   overlayGraphics = createGraphics(capture.width, capture.height);
-  overlayGraphics.clear(); // 確保圖層透明
 }
 
 function draw() {
@@ -33,15 +32,18 @@ function draw() {
   pop();
 
   // 在 overlayGraphics 上繪製內容
-  overlayGraphics.clear(); // 清除之前的內容
-  overlayGraphics.fill(255, 0, 0, 100); // 半透明紅色
+  overlayGraphics.background(0); // 設定背景為黑色
   overlayGraphics.noStroke();
-  overlayGraphics.ellipse(
-    overlayGraphics.width / 2,
-    overlayGraphics.height / 2,
-    overlayGraphics.width * 0.5,
-    overlayGraphics.height * 0.5
-  );
+
+  // 每隔 20 單位繪製圓
+  for (let x = 0; x < overlayGraphics.width; x += 20) {
+    for (let y = 0; y < overlayGraphics.height; y += 20) {
+      // 從 capture 影像中取得相對應位置的顏色
+      let col = capture.get(x, y);
+      overlayGraphics.fill(col);
+      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 圓的寬高為 15
+    }
+  }
 
   // 將圖層顯示在攝影機影像上層
   image(
